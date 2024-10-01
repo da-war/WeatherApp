@@ -1,9 +1,9 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Forecast } from "@/models/Weather";
+import { Forecast, ForecastType } from "@/models/Weather";
 import { Canvas, RoundedRect, Shadow } from "@shopify/react-native-skia";
 import { DEGREE_SYMBOL } from "@/utils/Constants";
-import { convertTo12hrFormat } from "@/utils/dateHelper";
+import { convertTo12hrFormat, getDayOfWeek } from "@/utils/dateHelper";
 
 interface ForecastCapsuleProps {
   forecast: Forecast;
@@ -18,11 +18,23 @@ const ForecastCapsule = ({
   height,
   radius,
 }: ForecastCapsuleProps) => {
-  const { date, icon, probability, temperature } = forecast;
-  const newDate = convertTo12hrFormat(date);
-  const capsultOpacity = newDate.toLowerCase() === "now" ? 1 : 0.3;
+  const { date, icon, probability, temperature, type } = forecast;
 
-  const probabilityOpacity = probability > 0 ? 1 : 0;
+  const timeDateOpacityDisplay = (): [string, number] => {
+    let opacity = 0;
+    let timeOrDate = "";
+    if (type === ForecastType.Hourly) {
+      timeOrDate = convertTo12hrFormat(date);
+      opacity = timeOrDate.toLowerCase() === "now" ? 1 : 0.3;
+    } else {
+      const [dayOfWeek, isToday] = getDayOfWeek(date);
+      timeOrDate = dayOfWeek;
+      opacity = isToday ? 1 : 0.3;
+    }
+    return [timeOrDate, opacity];
+  };
+
+  const [timeToDisplay, capsultOpacity] = timeDateOpacityDisplay();
 
   return (
     <View style={{ width: width, height: height }}>
@@ -39,14 +51,14 @@ const ForecastCapsule = ({
         </RoundedRect>
       </Canvas>
       <View style={[styles.cap]}>
-        <Text style={styles.time}>{newDate}</Text>
+        <Text style={styles.time}>{timeToDisplay}</Text>
         <View>
           <Image
             source={icon}
             style={{ width: width / 2, height: width / 2 }}
           />
 
-          <Text style={[styles.probability, { opacity: probabilityOpacity }]}>
+          <Text style={[styles.probability, { opacity: capsultOpacity }]}>
             {probability}%
           </Text>
         </View>

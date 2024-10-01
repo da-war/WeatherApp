@@ -9,4 +9,13 @@ export const convertTo12hrFormat = (time: Date) => {
     hours = hours %12;
     hours= hours ? hours : 12;
     return `${hours} ${amPm}`;
-    }
+}
+    
+
+export const getDayOfWeek = (date: Date):[string,boolean] => {
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const day = days[date.getDay()];
+    const isToday = new Date().getDay() === date.getDay();
+    return [day, isToday];
+    
+} 

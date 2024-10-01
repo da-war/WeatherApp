@@ -35,7 +35,13 @@ const ForecastSheetBackground = ({
       }}
     >
       <Canvas style={{ flex: 1 }}>
-        <RoundedRect x={0} y={0} width={width} height={height} r={cornerRadius}>
+        <RoundedRect
+          x={0}
+          y={0}
+          width={"100%"}
+          height={height}
+          r={cornerRadius}
+        >
           <LinearGradient
             start={vec(0, 0)}
             end={vec(width, height)}
