@@ -20,6 +20,10 @@ const ForecastCapsule = ({
 }: ForecastCapsuleProps) => {
   const { date, icon, probability, temperature } = forecast;
   const newDate = convertTo12hrFormat(date);
+  const capsultOpacity = newDate.toLowerCase() === "now" ? 1 : 0.3;
+
+  const probabilityOpacity = probability > 0 ? 1 : 0;
+
   return (
     <View style={{ width: width, height: height }}>
       <Canvas style={{ flex: 1, ...StyleSheet.absoluteFillObject }}>
@@ -29,7 +33,7 @@ const ForecastCapsule = ({
           width={width}
           height={height}
           r={radius}
-          color={"rgba(72,49,157,1)"}
+          color={`rgba(72,49,157,${capsultOpacity})`}
         >
           <Shadow dx={5} dy={4} blur={10} color={"rgba(0,0,0,0.25)"} inner />
         </RoundedRect>
@@ -41,7 +45,10 @@ const ForecastCapsule = ({
             source={icon}
             style={{ width: width / 2, height: width / 2 }}
           />
-          <Text style={styles.probability}>{probability}%</Text>
+
+          <Text style={[styles.probability, { opacity: probabilityOpacity }]}>
+            {probability}%
+          </Text>
         </View>
         <Text style={styles.temperature}>
           {temperature} {DEGREE_SYMBOL}
