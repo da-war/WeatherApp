@@ -44,9 +44,10 @@ const HomeBackground = () => {
         >
           <Rect x={0} y={0} width={width} height={smokeHeight}>
             <LinearGradient
-              start={vec(0, 0)}
-              end={vec(0, smokeHeight)}
-              colors={["#2E335A", "#1C1B33"]}
+              start={vec(width / 2, 0)}
+              end={vec(width / 2, smokeHeight)}
+              colors={["rgba(58, 63, 84, 0)", "rgba(58, 63, 84, 1)"]}
+              positions={[-0.02, 0.54]}
             />
           </Rect>
         </Canvas>
