@@ -1,4 +1,5 @@
 import {
+  Image,
   ImageBackground,
   StyleSheet,
   Text,
@@ -28,7 +29,15 @@ const HomeBackground = () => {
           height: "100%",
         }}
       >
-        <Text>Inside</Text>
+        <Image
+          source={require("../assets/home/House.png")}
+          resizeMode="cover"
+          style={{
+            flex: 1,
+            ...StyleSheet.absoluteFillObject,
+            top: "36%",
+          }}
+        />
       </ImageBackground>
     </>
   );
