@@ -5,12 +5,17 @@ import {
   Text,
   useWindowDimensions,
   View,
+  ScaledSize,
 } from "react-native";
 import React from "react";
 import { Canvas, LinearGradient, Rect, vec } from "@shopify/react-native-skia";
 
 const HomeBackground = () => {
-  const { width, height } = useWindowDimensions();
+  const dimensions = useWindowDimensions();
+  const { width, height } = dimensions;
+  const myStyles = styles(dimensions);
+  const smokeHeight = height * 0.6;
+  const smokeOffsetY = height * 0.4;
   return (
     <>
       <Canvas style={{ flex: 1 }}>
@@ -29,14 +34,19 @@ const HomeBackground = () => {
           height: "100%",
         }}
       >
+        <Canvas
+          style={{
+            height: smokeHeight,
+            ...StyleSheet.absoluteFillObject,
+            top: smokeOffsetY,
+          }}
+        >
+          <Rect x={0} y={0} width={width} height={smokeHeight}></Rect>
+        </Canvas>
         <Image
           source={require("../assets/home/House.png")}
           resizeMode="cover"
-          style={{
-            flex: 1,
-            ...StyleSheet.absoluteFillObject,
-            top: "36%",
-          }}
+          style={myStyles.image}
         />
       </ImageBackground>
     </>
@@ -45,4 +55,12 @@ const HomeBackground = () => {
 
 export default HomeBackground;
 
-const styles = StyleSheet.create({});
+const styles = ({ width }: ScaledSize) =>
+  StyleSheet.create({
+    image: {
+      width: width,
+      height: width,
+      ...StyleSheet.absoluteFillObject,
+      top: "36%",
+    },
+  });
