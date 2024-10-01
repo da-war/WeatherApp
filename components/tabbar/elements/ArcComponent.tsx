@@ -20,7 +20,7 @@ const ArcComponent = ({ height, width }: ArcComponentProps) => {
 
   const archBorder = `M 0 0 Q ${width / 2} ${height / 2} ${width} 0`;
   return (
-    <Canvas style={{ height: height }}>
+    <Canvas style={{ height: height, ...StyleSheet.absoluteFillObject }}>
       <Path path={archPath}>
         <LinearGradient
           start={vec(width / 2, 0)}

@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import useApplicationDimensions from "@/hooks/useApplicationDimensions";
 import ArcComponent from "./elements/ArcComponent";
+import TabBarItems from "./elements/TabBarItems";
 
 const WeatherTabBar = () => {
   const TabBarHeight = 88;
@@ -15,6 +16,7 @@ const WeatherTabBar = () => {
       }}
     >
       <ArcComponent width={width} height={TabBarHeight} />
+      <TabBarItems />
     </View>
   );
 };
