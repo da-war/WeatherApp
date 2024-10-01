@@ -9,9 +9,10 @@ import {
 } from "react-native";
 import React from "react";
 import { Canvas, LinearGradient, Rect, vec } from "@shopify/react-native-skia";
+import useApplicationDimensions from "@/hooks/useApplicationDimensions";
 
 const HomeBackground = () => {
-  const dimensions = useWindowDimensions();
+  const dimensions = useApplicationDimensions();
   const { width, height } = dimensions;
   const myStyles = styles(dimensions);
   const smokeHeight = height * 0.6;
@@ -41,7 +42,13 @@ const HomeBackground = () => {
             top: smokeOffsetY,
           }}
         >
-          <Rect x={0} y={0} width={width} height={smokeHeight}></Rect>
+          <Rect x={0} y={0} width={width} height={smokeHeight}>
+            <LinearGradient
+              start={vec(0, 0)}
+              end={vec(0, smokeHeight)}
+              colors={["#2E335A", "#1C1B33"]}
+            />
+          </Rect>
         </Canvas>
         <Image
           source={require("../assets/home/House.png")}
