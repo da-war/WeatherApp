@@ -39,6 +39,12 @@
         {
           "locationAlwaysAndWhenInUsePermission": "Allow Weather App to use your location."
         }
+      ],
+      [
+        "expo-dev-launcher",
+        {
+          "launchMode": "most-recent"
+        }
       ]
     ],
     "experiments": {
