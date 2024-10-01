@@ -10,13 +10,19 @@ import WeatherInfo from "@/components/section/WeatherInfo";
 import { currentWeather } from "@/data/CurrentWeather";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import ForecastSheet from "@/components/sheet/ForecastSheet";
+
 const index = () => {
   return (
     <SafeAreaProvider>
-      <HomeBackground />
-      <WeatherInfo weather={currentWeather} />
-      <WeatherTabBar />
-      <StatusBar style="light" />
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <HomeBackground />
+        <WeatherInfo weather={currentWeather} />
+        <ForecastSheet />
+        <WeatherTabBar />
+        <StatusBar style="light" />
+      </GestureHandlerRootView>
     </SafeAreaProvider>
   );
 };
