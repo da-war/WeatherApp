@@ -42,15 +42,6 @@ const HomeBackground = () => {
   const lftBgColor = useSharedValue("#2E335A");
   const rtBgColor = useSharedValue("#1C1B33");
 
-  const bgColors = useDerivedValue(() => {
-    lftBgColor.value = interpolate(
-      animatedPosition.value,
-      [0, 1],
-      ["#2E335A", "#422E5A"]
-    );
-    return [lftBgColor.value, rtBgColor.value];
-  });
-
   const animatedImageStyles = useAnimatedStyle(() => {
     return {
       transform: [
@@ -92,7 +83,7 @@ const HomeBackground = () => {
           <LinearGradient
             start={vec(0, 0)}
             end={vec(width, height)}
-            colors={bgColors}
+            colors={["#2E335A", "#1C1B33"]}
           />
         </Rect>
       </Canvas>
