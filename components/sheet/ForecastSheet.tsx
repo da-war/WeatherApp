@@ -9,9 +9,8 @@ import ForecastSheetBackground from "./ForecastSheetBackground";
 import useApplicationDimensions from "@/hooks/useApplicationDimensions";
 import ForecastControl from "./elements/ForecastControl";
 import Separator from "./elements/Separator";
-import ForecastCapsule from "../forecast/ForecastCapsule";
-import { hourly, weekly } from "@/data/ForecastData";
 import ForecastScroll from "../forecast/ForecastScroll";
+import { hourly, weekly } from "@/data/ForecastData";
 import { ForecastType } from "@/models/Weather";
 import AirQualityWidget from "../forecast/widgets/AirQualityWidget";
 import UvIndexWidget from "../forecast/widgets/UvIndexWidget";
@@ -22,13 +21,19 @@ import FeelsLikeWidget from "../forecast/widgets/FeelsLikeWidget";
 import HumidityWidget from "../forecast/widgets/HumidityWidget";
 import VisibilityWidget from "../forecast/widgets/VisibilityWidget";
 import PressureWidget from "../forecast/widgets/PressureWidget";
+import { useAnimatedReaction, useSharedValue } from "react-native-reanimated";
 
 const ForecastSheet = () => {
   const snapPoints = ["38.5%", "83%"];
 
+  const currentPosition = useSharedValue(0);
+
   const { width, height } = useApplicationDimensions();
   const smallWidgetSize = width / 2 - 20;
   const firstSnapPoint = height * (parseFloat(snapPoints[0]) / 100);
+  const secondSnapPoint = height * (parseFloat(snapPoints[1]) / 100);
+  const minY = height - secondSnapPoint;
+  const maxY = height - firstSnapPoint;
   const cornerRadius = 44;
   const capsuleRadius = 30;
   const capsuleHeight = height * 0.17;
@@ -38,9 +43,33 @@ const ForecastSheet = () => {
     ForecastType.Hourly
   );
 
+  // Calculate normalized position (0 to 1)
+  const normalizedPosition = (position: number) => {
+    "worklet";
+    return (position - maxY) / (minY - maxY);
+  };
+
+  // Animate and normalize the current position
+  useAnimatedReaction(
+    () => {
+      return currentPosition.value;
+    }, // Track the current position of the BottomSheet
+    (cv) => {
+      // Normalize the position and log the value
+      const normalizedValue = normalizedPosition(cv);
+      if (normalizedValue === -0) {
+        console.log("Normalized Position:", 0);
+      } else {
+        console.log("Normalized Position:", normalizedValue);
+      }
+    }
+  );
+
   return (
     <BottomSheet
       snapPoints={snapPoints}
+      animatedPosition={currentPosition}
+      animateOnMount={false}
       style={{
         flex: 1,
       }}

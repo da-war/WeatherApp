@@ -13,7 +13,7 @@ const index = () => {
   return (
     <SafeAreaProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <BasicAnimation />
+        <Home />
         <StatusBar style="light" />
       </GestureHandlerRootView>
     </SafeAreaProvider>
