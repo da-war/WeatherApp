@@ -7,12 +7,13 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Home from "./home";
+import BasicAnimation from "./BasicAnimation";
 
 const index = () => {
   return (
     <SafeAreaProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <Home />
+        <BasicAnimation />
         <StatusBar style="light" />
       </GestureHandlerRootView>
     </SafeAreaProvider>
