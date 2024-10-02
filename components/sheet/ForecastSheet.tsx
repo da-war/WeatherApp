@@ -22,6 +22,7 @@ import HumidityWidget from "../forecast/widgets/HumidityWidget";
 import VisibilityWidget from "../forecast/widgets/VisibilityWidget";
 import PressureWidget from "../forecast/widgets/PressureWidget";
 import { useAnimatedReaction, useSharedValue } from "react-native-reanimated";
+import { useForecastSheetPosition } from "@/context/ForecastSheetContext";
 
 const ForecastSheet = () => {
   const snapPoints = ["38.5%", "83%"];
@@ -43,6 +44,8 @@ const ForecastSheet = () => {
     ForecastType.Hourly
   );
 
+  const animatedPosition = useForecastSheetPosition();
+
   // Calculate normalized position (0 to 1)
   const normalizedPosition = (position: number) => {
     "worklet";
@@ -61,6 +64,7 @@ const ForecastSheet = () => {
         console.log("Normalized Position:", 0);
       } else {
         console.log("Normalized Position:", normalizedValue);
+        animatedPosition.value = normalizedValue;
       }
     }
   );
